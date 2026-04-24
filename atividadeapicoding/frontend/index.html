@@ -1,27 +1,113 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study Tracker</title>
-
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDNK - Gestão de Matérias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #8b5cf6;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #10b981;
+            --danger: #ef4444;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+            margin-bottom: 2rem;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+        }
+        .form-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0 1rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.9; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .subject-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        .subject-card h3 { margin-top: 0; color: var(--primary); }
+        .subject-card p { color: var(--text-muted); font-size: 0.9rem; }
+        .actions { display: flex; gap: 10px; margin-top: 1rem; }
+        .btn-edit { background: var(--accent); }
+        .btn-delete { background: var(--danger); }
+    </style>
 </head>
 <body>
-  <div class="upper-bar">
-    <h1>📚 Study Tracker</h1>
-  </div>
+    <header>
+        <h1>Study <span style="font-weight: 300;">Tracker</span></h1>
+        <p style="color: var(--text-muted)">Gestão de Matérias e Anotações</p>
+    </header>
+    <div class="container">
+        <div class="form-card">
+            <h2 id="form-title">Nova Matéria</h2>
+            <input type="hidden" id="subject-id">
+            <label>Título da Matéria</label>
+            <input type="text" id="name" placeholder="Ex: Programação Web">
+            
+            <label>Anotações / Descrição</label>
+            <textarea id="description" rows="4" placeholder="Anote aqui os pontos principais..."></textarea>
+            
+            <button id="btn-save" onclick="saveSubject()">Salvar Matéria</button>
+            <button id="btn-cancel" style="background:#475569; display:none;" onclick="resetForm()">Cancelar</button>
+        </div>
 
-  <div class="main-container">
-    <h2>Adicionar Matéria</h2>
-    <input type="text" id="name" placeholder="Nome da matéria">
-    <input type="text" id="description" placeholder="Descrição">
-    <button onclick="addSubject()">Adicionar</button>
-  </div>
-  <h2>Matérias</h2>
-  <ul id="subjectList"></ul>
+        <h2>Minhas Matérias</h2>
+        <div id="subjects-grid" class="grid">
+            <!-- Dinâmico -->
+        </div>
+    </div>
 
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

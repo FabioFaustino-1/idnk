@@ -1,52 +1,85 @@
 const API_URL = 'http://localhost:3000/subjects';
 
-// carregar matérias
-async function loadSubjects() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
+// Função para carregar e exibir todas as matérias
+async function fetchSubjects() {
+    const res = await fetch(API_URL);
 
-  const list = document.getElementById('subjectList');
-  list.innerHTML = '';
+    const subjects = await res.json();
+    const grid = document.getElementById('subjects-grid');
+    grid.innerHTML = '';
 
-  data.forEach(subject => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      ${subject.name}
-      <button onclick="deleteSubject('${subject._id}')">Excluir</button>
-    `;
-    list.appendChild(li);
-  });
+    subjects.forEach(s => {
+        grid.innerHTML += `
+            <div class="subject-card" style="border-left-color: ${s.color || '#8b5cf6'}">
+                <h3>${s.name}</h3>
+                <p>${s.description || 'Sem descrição.'}</p>
+                <div class="actions">
+                    <button class="btn-edit" onclick="editSubject('${s._id}', '${s.name}', '${s.description}')">Editar</button>
+                    <button class="btn-delete" onclick="deleteSubject('${s._id}')">Excluir</button>
+                </div>
+            </div>
+        `;
+    });
 }
 
-// adicionar matéria
-async function addSubject() {
-  const name = document.getElementById('name').value;
-  const description = document.getElementById('description').value;
+// Função para salvar (criar ou atualizar) uma matéria
+async function saveSubject() {
+    const id = document.getElementById('subject-id').value;
+    const name = document.getElementById('name').value;
+    const description = document.getElementById('description').value;
 
-  await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ name, description })
-  });
+    if (!name) return alert("O título é obrigatório");
 
-  loadSubjects();
+    const method = id ? 'PUT' : 'POST';
+    const url = id ? `${API_URL}/${id}` : API_URL;
+
+    await fetch(url, {
+        method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description })
+    });
+
+    resetForm();
+    fetchSubjects();
 }
 
-// deletar
+// Função para deletar uma matéria
 async function deleteSubject(id) {
-  await fetch(`${API_URL}/${id}`, {
-    method: 'DELETE'
-  });
+    if (confirm("Deseja realmente excluir esta matéria?")) {
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchSubjects();
+    }
+}
 
-  loadSubjects();
+// Função para preencher o formulário para edição
+function editSubject(id, name, description) {
+    document.getElementById('subject-id').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('description').value = description;
+    
+    document.getElementById('form-title').innerText = "Editar Matéria";
+    document.getElementById('btn-save').innerText = "Atualizar Alterações";
+    document.getElementById('btn-cancel').style.display = "inline-block";
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo para o formulário ficar visível
+}
+
+// Função para resetar o formulário
+function resetForm() {
+    document.getElementById('subject-id').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('form-title').innerText = "Nova Matéria";
+    document.getElementById('btn-save').innerText = "Salvar Matéria";
+    document.getElementById('btn-cancel').style.display = "none";
 }
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
     .then(() => console.log('Service Worker registrado'));
 }
-// iniciar
-loadSubjects();
 
+// Carregar as matérias ao iniciar a página
+fetchSubjects();

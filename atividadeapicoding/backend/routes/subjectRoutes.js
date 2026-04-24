@@ -2,64 +2,64 @@ const express = require('express');
 const router = express.Router();
 const Subject = require('../models/Subject');
 
+// --- CRUD DE MATÉRIAS ---
 
-// CREATE
+// Criar uma nova matéria
 router.post('/', async (req, res) => {
   try {
     const subject = new Subject(req.body);
     await subject.save();
     res.status(201).json(subject);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-
-// READ (todos)
+// Listar todas as matérias
 router.get('/', async (req, res) => {
   try {
-    const subjects = await Subject.find();
+    const subjects = await Subject.find().sort({ createdAt: -1 });
     res.json(subjects);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
-
-// READ (por ID)
+// Obter uma matéria específica por ID (opcional, mas útil)
 router.get('/:id', async (req, res) => {
   try {
     const subject = await Subject.findById(req.params.id);
-    if (!subject) return res.status(404).json({ message: 'Not found' });
+    if (!subject) return res.status(404).json({ message: "Matéria não encontrada" });
     res.json(subject);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
-
-// UPDATE
+// Atualizar uma matéria (título, descrição, cor)
 router.put('/:id', async (req, res) => {
   try {
+    const { name, description, color } = req.body;
     const subject = await Subject.findByIdAndUpdate(
       req.params.id,
-      req.body,
-      { new: true }
+      { name, description, color },
+      { new: true, runValidators: true } // 'new: true' retorna o documento atualizado, 'runValidators' executa as validações do schema
     );
+    if (!subject) return res.status(404).json({ message: "Matéria não encontrada" });
     res.json(subject);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-
-// DELETE
+// Excluir uma matéria
 router.delete('/:id', async (req, res) => {
   try {
-    await Subject.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const subject = await Subject.findByIdAndDelete(req.params.id);
+    if (!subject) return res.status(404).json({ message: "Matéria não encontrada" });
+    res.json({ message: "Matéria removida com sucesso" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

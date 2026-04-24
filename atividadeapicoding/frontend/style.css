@@ -1,5 +1,6 @@
 body {
-  font-family: Arial;
+  background: white;
+  font-family: monocraft;
   padding: 20px;
 }
 
@@ -11,15 +12,37 @@ input, button {
 li {
   margin: 5px 0;
 }
+body h1, ul, h2 {
+  color: rgb(124, 114, 114);
+}
 
 .upper-bar{
-    border: 2px solid gray;
+    border: 2px solid rgb(204, 135, 6);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+.upper-bar h1{
+  color: rgb(124, 114, 114)
 }
 
 .main-container{
-    border: 2ps solid gray;
+    border: 2px solid rgb(204, 135, 6);
+    border-radius: 10px;
     padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.main-container input{
+  border: 2px solid rgb(204, 135, 6);
+  border-radius: 10px;
+  border-radius: 30px;
+}
+.extra-container{
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgb(204, 135, 6);
+  border-radius: 10px;
+  padding: 5px;
 }

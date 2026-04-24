@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Study Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #8b5cf6;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 { margin-bottom: 0.5rem; }
+        h1 span { font-weight: 300; }
+        p { color: var(--text-muted); margin-bottom: 2rem; }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0 1rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        .toggle-link {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .toggle-link b { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Study <span>Tracker</span></h1>
+        <p id="auth-subtitle">Acesse sua conta para continuar</p>
+        
+        <div id="register-fields" style="display: none;">
+            <input type="text" id="reg-name" placeholder="Nome Completo">
+        </div>
+        
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="password" placeholder="Senha">
+        
+        <button id="auth-btn" onclick="handleAuth()">Entrar</button>
+        
+        <div class="toggle-link" id="toggle-auth" onclick="toggleAuthMode()">
+            Não tem uma conta? <b>Cadastre-se</b>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
