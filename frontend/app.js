@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/subjects';
+const API_URL = 'https://idnk.onrender.com/subjects';
 
 // Função para carregar e exibir todas as matérias
 async function fetchSubjects() {
