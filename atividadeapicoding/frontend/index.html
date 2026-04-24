@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDNK - Gestão de Matérias</title>
+    <script>
+        if (!localStorage.getItem('token')) {
+            window.location.href = 'login.html';
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -87,6 +92,7 @@
     <header>
         <h1>Study <span style="font-weight: 300;">Tracker</span></h1>
         <p style="color: var(--text-muted)">Gestão de Matérias e Anotações</p>
+        <button onclick="logout()" style="position: absolute; top: 20px; right: 20px; padding: 0.5rem 1rem; background: var(--danger); font-size: 0.8rem; width: auto;">Sair</button>
     </header>
     <div class="container">
         <div class="form-card">
@@ -109,5 +115,11 @@
     </div>
 
     <script src="app.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

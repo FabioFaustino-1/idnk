@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const subjectRoutes = require('./routes/subjectRoutes'); // Importação movida para o topo
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 // Registro das rotas de matérias
 app.use('/subjects', subjectRoutes);
+app.use('/auth', authRoutes);
 
 // iniciar servidor
 const PORT = process.env.PORT || 3000;

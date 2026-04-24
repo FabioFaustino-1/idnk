@@ -1,14 +1,14 @@
 {
-  "name": "Study Tracker",
-  "short_name": "Study",
-  "start_url": "/",
+  "name": "Study Tracker IDNK",
+  "short_name": "StudyTracker",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#3498db",
+  "background_color": "#0f172a",
+  "theme_color": "#8b5cf6",
   "icons": [
     {
-      "src": "icon.png",
-      "sizes": "192x192",
+      "src": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

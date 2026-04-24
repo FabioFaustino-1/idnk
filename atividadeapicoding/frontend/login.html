@@ -12,6 +12,8 @@
             --primary: #8b5cf6;
             --text: #f1f5f9;
             --text-muted: #94a3b8;
+            --accent: #10b981;
+            --danger: #ef4444;
         }
         body {
             background-color: var(--bg);
@@ -19,25 +21,34 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+        }
+        header {
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+            margin-bottom: 2rem;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
         }
         .login-card {
             background: var(--card-bg);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
             text-align: center;
         }
-        h1 { margin-bottom: 0.5rem; }
-        h1 span { font-weight: 300; }
-        p { color: var(--text-muted); margin-bottom: 2rem; }
+        h2 { margin-top: 0; margin-bottom: 0.5rem; color: var(--primary); }
+        p { color: var(--text-muted); margin-bottom: 1.5rem; }
         input {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.75rem;
             margin: 0.5rem 0 1rem;
             background: #0f172a;
             border: 1px solid #334155;
@@ -50,12 +61,14 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem;
+            padding: 0.75rem;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             margin-top: 1rem;
+            transition: opacity 0.2s;
         }
+        button:hover { opacity: 0.9; }
         .toggle-link {
             margin-top: 1.5rem;
             font-size: 0.9rem;
@@ -66,21 +79,28 @@
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <h1>Study <span>Tracker</span></h1>
-        <p id="auth-subtitle">Acesse sua conta para continuar</p>
-        
-        <div id="register-fields" style="display: none;">
-            <input type="text" id="reg-name" placeholder="Nome Completo">
-        </div>
-        
-        <input type="email" id="email" placeholder="E-mail">
-        <input type="password" id="password" placeholder="Senha">
-        
-        <button id="auth-btn" onclick="handleAuth()">Entrar</button>
-        
-        <div class="toggle-link" id="toggle-auth" onclick="toggleAuthMode()">
-            Não tem uma conta? <b>Cadastre-se</b>
+    <header>
+        <h1>Study <span style="font-weight: 300;">Tracker</span></h1>
+        <p style="color: var(--text-muted)">Gestão de Matérias e Anotações</p>
+    </header>
+
+    <div class="container">
+        <div class="login-card">
+            <h2 id="auth-title">Autenticação</h2>
+            <p id="auth-subtitle">Acesse sua conta para continuar</p>
+            
+            <div id="register-fields" style="display: none;">
+                <input type="text" id="reg-name" placeholder="Nome Completo">
+            </div>
+            
+            <input type="email" id="email" placeholder="E-mail">
+            <input type="password" id="password" placeholder="Senha">
+            
+            <button id="auth-btn" onclick="handleAuth()">Entrar</button>
+            
+            <div class="toggle-link" id="toggle-auth" onclick="toggleAuthMode()">
+                Não tem uma conta? <b>Cadastre-se</b>
+            </div>
         </div>
     </div>
     <script src="login.js"></script>

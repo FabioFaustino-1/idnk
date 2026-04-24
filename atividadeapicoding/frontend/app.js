@@ -2,7 +2,11 @@ const API_URL = 'http://localhost:3000/subjects';
 
 // Função para carregar e exibir todas as matérias
 async function fetchSubjects() {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
 
     const subjects = await res.json();
     const grid = document.getElementById('subjects-grid');
@@ -36,7 +40,8 @@ async function saveSubject() {
     await fetch(url, {
         method,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({ name, description })
     });
@@ -48,7 +53,12 @@ async function saveSubject() {
 // Função para deletar uma matéria
 async function deleteSubject(id) {
     if (confirm("Deseja realmente excluir esta matéria?")) {
-        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        await fetch(`${API_URL}/${id}`, { 
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
         fetchSubjects();
     }
 }

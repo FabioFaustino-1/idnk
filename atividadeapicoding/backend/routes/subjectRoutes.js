@@ -1,8 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Subject = require('../models/Subject');
+const jwt = require('jsonwebtoken');
 
-// --- CRUD DE MATÉRIAS ---
+// Middleware para verificar o token
+const authMiddleware = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ error: 'Acesso negado. Token não fornecido.' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.status(400).json({ error: 'Token inválido' });
+  }
+};
+
+// Aplicar middleware em todas as rotas de matérias
+router.use(authMiddleware);
 
 // Criar uma nova matéria
 router.post('/', async (req, res) => {

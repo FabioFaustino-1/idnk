@@ -3,6 +3,7 @@ let isLoginMode = true;
 
 function toggleAuthMode() {
     isLoginMode = !isLoginMode;
+    document.getElementById('auth-title').innerText = isLoginMode ? 'Autenticação' : 'Criar Conta';
     document.getElementById('auth-subtitle').innerText = isLoginMode ? 'Acesse sua conta para continuar' : 'Crie sua conta gratuita';
     document.getElementById('auth-btn').innerText = isLoginMode ? 'Entrar' : 'Cadastrar';
     document.getElementById('register-fields').style.display = isLoginMode ? 'none' : 'block';
